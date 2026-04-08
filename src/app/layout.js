@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Chronos — Interactive Calendar Planner",
+  title: "PlanDates -- Interactive Calendar Planner",
   description:
     "A beautifully crafted interactive calendar with date range selection, event planning, and note-taking. Inspired by physical wall calendars with a premium digital experience.",
   keywords: "calendar, planner, events, notes, schedule, organizer",
