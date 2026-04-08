@@ -42,8 +42,7 @@ export default function CalendarApp() {
 
   useEffect(() => {
     const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const nextIsDark = storedTheme ? storedTheme === "dark" : prefersDark;
+    const nextIsDark = storedTheme ? storedTheme === "dark" : false;
     setIsDarkMode(nextIsDark);
   }, []);
 
@@ -185,6 +184,7 @@ export default function CalendarApp() {
         notes={calendar.notes}
         onMonthChange={calendar.setCurrentDate}
         onDateClick={calendar.handleDateClick}
+        onEventClick={handleEventClick}
         onDeleteNote={handleDeleteNote}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}

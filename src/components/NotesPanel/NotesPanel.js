@@ -1,10 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   format,
   isSameDay,
-  getEventsForDate,
   getEventsForMonth,
 } from "@/utils/calendarHelpers";
 
@@ -48,11 +46,6 @@ export default function NotesPanel({
   }, [rangeSaveMessage]);
 
   const hasRangeChanges = rangeKey && rangeNoteDraft.trim().length > 0;
-
-  // Get events for selected date or range
-  const selectedEvents = selectedRange.start
-    ? getEventsForDate(events, selectedRange.start)
-    : [];
 
   const monthEvents = getEventsForMonth(events, currentDate);
 
@@ -143,51 +136,35 @@ export default function NotesPanel({
           </div>
         )}
 
-        {/* Events for selected date */}
-        {selectedEvents.length > 0 && (
+        {/* Notes instruction + Upcoming placeholder (swapped order when fully empty) */}
+        {!selectedRange.start && monthEvents.length === 0 && (
           <div>
-            <div className="notes-section-label">Events on this day</div>
-            <div className="events-list">
-              <AnimatePresence>
-                {selectedEvents.map((event) => (
-                  <motion.div
-                    key={event.id}
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 10 }}
-                    className="event-item"
-                    style={{ borderLeftColor: event.color || "#7c5cfc" }}
-                    onClick={() => onEventClick(event)}
-                  >
-                    <div className="event-item-title">{event.title}</div>
-                    <div className="event-item-time">
-                      🕐 {event.startTime || "All day"}{" "}
-                      {event.endTime && `- ${event.endTime}`}
-                    </div>
-                    {event.category && (
-                      <span
-                        className="event-item-category"
-                        style={{
-                          background: event.bgColor || "rgba(124,92,252,0.15)",
-                          color: event.color || "#7c5cfc",
-                        }}
-                      >
-                        {event.category}
-                      </span>
-                    )}
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+            <div className="empty-state" style={{ padding: "10px 0 14px" }}>
+              <div className="empty-state-icon">✨</div>
+              <div className="empty-state-text">
+                Select dates on the calendar to add notes, or click + to create
+                events.
+              </div>
             </div>
+            <div
+              style={{
+                borderTop: "1px solid var(--border-subtle)",
+                margin: "6px 0 14px",
+              }}
+            />
           </div>
         )}
 
         {/* This month's events overview */}
-        {monthEvents.length > 0 && (
-          <div>
-            <div className="notes-section-label">
-              Upcoming Events ({monthEvents.length})
+        <div>
+          <div className="notes-section-label">
+            Upcoming Events {monthEvents.length > 0 ? `(${monthEvents.length})` : ""}
+          </div>
+          {monthEvents.length === 0 ? (
+            <div className="empty-state" style={{ padding: "10px 0 4px" }}>
+              <div className="empty-state-text">No upcoming events</div>
             </div>
+          ) : (
             <div className="events-list">
               {monthEvents.slice(0, 8).map((event) => (
                 <div
@@ -208,18 +185,8 @@ export default function NotesPanel({
                 </div>
               )}
             </div>
-          </div>
-        )}
-
-        {!selectedRange.start && monthEvents.length === 0 && (
-          <div className="empty-state">
-            <div className="empty-state-icon">✨</div>
-            <div className="empty-state-text">
-              Select dates on the calendar to add notes, or click + to create
-              events.
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </aside>
   );

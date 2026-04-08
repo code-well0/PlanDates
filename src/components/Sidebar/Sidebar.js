@@ -11,7 +11,6 @@ import {
   isRangeStart,
   isRangeEnd,
   getEventsForDate,
-  getEventsForMonth,
   WEEKDAYS,
 } from "@/utils/calendarHelpers";
 
@@ -22,6 +21,7 @@ export default function Sidebar({
   notes,
   onMonthChange,
   onDateClick,
+  onEventClick,
   onDeleteNote,
   isOpen,
   onClose,
@@ -29,7 +29,6 @@ export default function Sidebar({
   const [showAllDayNotes, setShowAllDayNotes] = useState(false);
   const [showAllRangeNotes, setShowAllRangeNotes] = useState(false);
   const calendarDays = getCalendarDays(currentDate);
-  const monthEvents = getEventsForMonth(events, currentDate);
 
   const savedRangeNotes = Object.entries(notes || {})
     .filter(([key, value]) => key.includes("_") && typeof value === "string" && value.trim())
@@ -45,6 +44,9 @@ export default function Sidebar({
     });
 
   const monthPrefix = format(currentDate, "yyyy-MM");
+  const selectedEvents = selectedRange.start
+    ? getEventsForDate(events, selectedRange.start)
+    : [];
   const dayNotes = Object.entries(notes || {})
     .filter(([key, value]) => {
       if (typeof value !== "string" || !value.trim()) return false;
@@ -163,9 +165,52 @@ export default function Sidebar({
           </div>
         </div>
 
-        {/* Day Notes */}
-        <div className="sidebar-section">
-          <div className="sidebar-section-title">Day Notes</div>
+        {/* Events on selected day */}
+        {selectedRange.start && (
+          <div className="sidebar-section">
+            <div className="sidebar-section-title">Events on this day</div>
+            {selectedEvents.length === 0 ? (
+              <div className="empty-state" style={{ padding: "12px 0" }}>
+                <div className="empty-state-text">No events on this day</div>
+              </div>
+            ) : (
+              <AnimatePresence mode="popLayout">
+                {selectedEvents.map((event) => (
+                  <motion.div
+                    key={event.id}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -10 }}
+                    className="event-item"
+                    style={{ borderLeftColor: event.color || "#7c5cfc" }}
+                    onClick={() => onEventClick(event)}
+                  >
+                    <div className="event-item-title">{event.title}</div>
+                    <div className="event-item-time">
+                      🕐 {event.startTime || "All day"}{" "}
+                      {event.endTime ? `- ${event.endTime}` : ""}
+                    </div>
+                    {event.category && (
+                      <span
+                        className="event-item-category"
+                        style={{
+                          background: event.bgColor || "rgba(124,92,252,0.15)",
+                          color: event.color || "#7c5cfc",
+                        }}
+                      >
+                        {event.category}
+                      </span>
+                    )}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            )}
+          </div>
+        )}
+
+        {/* Saved Day Notes */}
+        <div className={`sidebar-section ${dayNotes.length === 0 ? "sidebar-section-compact-empty" : ""}`}>
+          <div className="sidebar-section-title">Saved Day Notes</div>
           {dayNotes.length === 0 ? (
             <div className="empty-state" style={{ padding: "16px 0" }}>
               <div style={{ fontSize: "24px", opacity: 0.4, marginBottom: "6px" }}>📝</div>
@@ -219,7 +264,7 @@ export default function Sidebar({
         </div>
 
         {/* Saved Range Notes */}
-        <div className="sidebar-section">
+        <div className={`sidebar-section ${savedRangeNotes.length === 0 ? "sidebar-section-compact-empty" : ""}`}>
           <div className="sidebar-section-title">Saved Range Notes</div>
           {savedRangeNotes.length === 0 ? (
             <div className="empty-state" style={{ padding: "16px 0" }}>

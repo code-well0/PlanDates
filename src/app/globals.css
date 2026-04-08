@@ -595,6 +595,24 @@ body.dark-theme {
   border-bottom: 1px solid var(--border-subtle);
 }
 
+.sidebar-section-compact-empty {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.sidebar-section-compact-empty .sidebar-section-title {
+  margin-bottom: 8px;
+}
+
+.sidebar-section-compact-empty .empty-state {
+  padding: 8px 0 !important;
+}
+
+.sidebar-section-compact-empty .empty-state-text {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
 .sidebar-section-title {
   font-size: 13px;
   font-weight: 700;
