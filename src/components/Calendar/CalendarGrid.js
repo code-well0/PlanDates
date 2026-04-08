@@ -115,7 +115,7 @@ function CalendarHeader({
           onClick={onToggleTheme}
           aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
         >
-          {isDarkMode ? "🌞" : "🌛"}
+          {isDarkMode ? "☀" : "☾"}        
         </button>
         <button
           className="nav-btn"
@@ -160,7 +160,7 @@ function HeroSection({ currentDate, direction }) {
 
   return (
     <div className="hero-section">
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="sync">
         <motion.img
           key={format(currentDate, "yyyy-MM")}
           src={imgSrc}

@@ -256,6 +256,24 @@ body.dark-theme {
 }
 
 /* ===== SIDEBAR ===== */
+.sidebar-app-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: rgba(0,0,0,0.7);
+}
+
+.dark-theme .sidebar-app-name {
+  color: rgba(255,255,255,0.8);
+}
+
+.sidebar-app-name span {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  font-style: italic;
+}
+
 .sidebar {
   width: clamp(260px, 20vw, 360px);
   background: var(--bg-secondary);

@@ -7,6 +7,7 @@ import EventModal from "@/components/EventModal/EventModal";
 import EventDetailsModal from "@/components/EventModal/EventDetailsModal";
 import NotesPanel from "@/components/NotesPanel/NotesPanel";
 import { format, MONTH_THEMES } from "@/utils/calendarHelpers";
+import { MONTH_IMAGES } from "@/utils/calendarHelpers";
 
 const THEME_STORAGE_KEY = "calendar_theme_mode";
 
@@ -44,6 +45,13 @@ export default function CalendarApp() {
     const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
     const nextIsDark = storedTheme ? storedTheme === "dark" : false;
     setIsDarkMode(nextIsDark);
+  }, []);
+
+  useEffect(() => {
+    Object.values(MONTH_IMAGES).forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
   }, []);
 
   useEffect(() => {

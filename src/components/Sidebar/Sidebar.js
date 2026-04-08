@@ -96,8 +96,11 @@ export default function Sidebar({
       )}
       <aside className={`sidebar ${isOpen ? "open" : ""}`} id="sidebar">
         {/* Header */}
+        {/* Header */}
         <div className="sidebar-header">
-          <div className="sidebar-app-name">PlanDates</div>
+          <div className="sidebar-app-name">
+            Plan<span>Dates</span>
+          </div>
         </div>
 
         {/* Mini Calendar */}
@@ -210,11 +213,28 @@ export default function Sidebar({
 
         {/* Saved Day Notes */}
         <div className={`sidebar-section ${dayNotes.length === 0 ? "sidebar-section-compact-empty" : ""}`}>
-          <div className="sidebar-section-title">Saved Day Notes</div>
+          <div 
+            className="sidebar-section-title"
+            style={{
+              fontFamily: "Playfair Display, serif",
+              fontSize: "16px",
+              fontWeight: 600
+            }}
+          >
+            Saved Day Notes
+          </div>          
           {dayNotes.length === 0 ? (
             <div className="empty-state" style={{ padding: "16px 0" }}>
-              <div style={{ fontSize: "24px", opacity: 0.4, marginBottom: "6px" }}>📝</div>
-              <div className="empty-state-text">No saved day notes</div>
+              <div 
+                className="empty-state-text"
+                style={{
+                  fontFamily: "Poppins, sans-serif",
+                  fontSize: "14px",
+                  opacity: 0.7
+                }}
+              >
+                No saved day notes
+              </div>
             </div>
           ) : (
             <AnimatePresence mode="popLayout">
@@ -265,11 +285,29 @@ export default function Sidebar({
 
         {/* Saved Range Notes */}
         <div className={`sidebar-section ${savedRangeNotes.length === 0 ? "sidebar-section-compact-empty" : ""}`}>
-          <div className="sidebar-section-title">Saved Range Notes</div>
+          <div 
+            className="sidebar-section-title"
+            style={{
+              fontFamily: "Playfair Display, serif",
+              fontSize: "16px",
+              fontWeight: 600,
+              letterSpacing: "0.3px"
+            }}
+          >
+            Saved Range Notes
+          </div>          
           {savedRangeNotes.length === 0 ? (
             <div className="empty-state" style={{ padding: "16px 0" }}>
-              <div style={{ fontSize: "20px", opacity: 0.35, marginBottom: "6px" }}>📝</div>
-              <div className="empty-state-text">No saved range notes</div>
+              <div 
+                className="empty-state-text"
+                style={{
+                  fontFamily: "Poppins, sans-serif",
+                  fontSize: "14px",
+                  opacity: 0.7
+                }}
+              >
+                No saved range notes
+              </div>
             </div>
           ) : (
             <div className="events-list">
