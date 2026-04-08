@@ -206,7 +206,7 @@ export function getHolidays(year) {
   // St Patrick's Day
   holidays[`${year}-03-17`] = "St. Patrick's Day";
   // Independence Day
-  holidays[`${year}-07-15`] = "Independence Day";
+  holidays[`${year}-08-15`] = "Independence Day";
   // Halloween
   holidays[`${year}-10-31`] = "Halloween";
   // Christmas
