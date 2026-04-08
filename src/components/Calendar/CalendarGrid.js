@@ -373,6 +373,9 @@ function MonthView({
   const calendarDays = getCalendarDays(currentDate);
   const year = currentDate.getFullYear();
   const holidays = getHolidays(year);
+  const today = new Date();
+  const showTodayWeekday = isSameMonth(today, currentDate);
+  const todayWeekdayIndex = today.getDay();
 
   return (
     <>
@@ -380,7 +383,9 @@ function MonthView({
         {WEEKDAYS.map((day, i) => (
           <div
             key={day}
-            className={`weekday-header ${i === 0 || i === 6 ? "weekend-header" : ""}`}
+            className={`weekday-header ${i === 0 || i === 6 ? "weekend-header" : ""} ${
+              showTodayWeekday && i === todayWeekdayIndex ? "today-weekday" : ""
+            }`}
           >
             <span className="weekday-short">{day}</span>
             <span className="weekday-full">{WEEKDAY_FULL[i]}</span>
